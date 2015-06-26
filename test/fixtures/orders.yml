@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  item_id: 
+  purchased: false
+  cart: false
+
+two:
+  user_id: 
+  item_id: 
+  purchased: false
+  cart: false
