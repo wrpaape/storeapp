@@ -10,7 +10,7 @@ end
 
 User.create(name: "admin",
            email: "admin@admin.com",
- password_digest: BCrypt::Password.create("admin")
+ password_digest: BCrypt::Password.create("admin"),
            admin: true)
 
 User.all.each do |user|
@@ -32,6 +32,15 @@ products_count.times do
 end
 
 User.all.sample(rand((users_count / 2)..users_count)).each do |user|
-
+  rand(4).times do
+    product = Product.all.sample
+    user.purchases.create(product_id: product.id,
+                            quantity: rand((product.quantity / 3.0).ceil))
+  end
+  rand(4).times do
+    product = Product.all.sample
+    user.cart_items.create(product_id: product.id,
+                             quantity: rand((product.quantity / 3.0).ceil))
+  end
 
 end
