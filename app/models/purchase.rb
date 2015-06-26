@@ -7,19 +7,21 @@ class Purchase < ActiveRecord::Base
   private
 
   def increment_users_counter_cache
-    User.increment_counter( 'products_count', self.user.id )
+    User.increment_counter('products_count', self.user.id)
   end
 
   def decrement_users_counter_cache
-    User.decrement_counter( 'products_count', self.user.id )
+    User.decrement_counter('products_count', self.user.id)
   end
 
   def increment_products_counter_cache
-    Product.increment_counter( 'users_count', self.product.id )
+    Product.increment_counter('users_count', self.product.id)
+    Product.decrement_counter('quantity', self.product.id)
   end
 
   def decrement_products_counter_cache
-    Product.decrement_counter( 'users_count', self.product.id )
+    Product.decrement_counter('users_count', self.product.id)
+    Product.increment_counter('quantity', self.product.id)
   end
 end
 

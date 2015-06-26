@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20150626213453) do
     t.integer  "user_id"
     t.string   "street",     null: false
     t.string   "city",       null: false
+    t.string   "state",      null: false
     t.integer  "zip",        null: false
-    t.string   "country",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -66,7 +66,8 @@ ActiveRecord::Schema.define(version: 20150626213453) do
     t.string   "name",                               null: false
     t.string   "password_digest",                    null: false
     t.string   "email",                              null: false
-    t.boolean  "admin",              default: false, null: false
+    t.boolean  "admin",              default: false
+    t.integer  "addresses_counter",  default: 0
     t.integer  "cart_items_counter", default: 0
     t.integer  "purchases_counter",  default: 0
     t.integer  "products_counter",   default: 0
