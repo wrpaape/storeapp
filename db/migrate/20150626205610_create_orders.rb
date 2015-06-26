@@ -4,7 +4,7 @@ class CreateOrders < ActiveRecord::Migration
       t.belongs_to :user, index: true, foreign_key: true
       t.belongs_to :item, index: true, foreign_key: true
       t.boolean :purchased
-      t.boolean :cart
+      t.boolean :cart, default:
 
       t.timestamps null: false
     end
