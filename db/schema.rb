@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150626213453) do
     t.string   "category",         default: "N/A"
     t.text     "description",      default: "N/A"
     t.integer  "quantity",         default: 0
-    t.string   "image",            default: "http://img1.wikia.nocookie.net/__cb20141028171337/pandorahearts/images/a/ad/Not_available.jpg"
+    t.string   "image",            default: "http://img1.wikia.nocookie.net/__cb20141028171337/pandorahearts/images/a/ad/Not_available.jpg", null: false
     t.integer  "cart_items_count", default: 0
     t.integer  "purchases_count",  default: 0
     t.integer  "users_count",      default: 0

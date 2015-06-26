@@ -20,13 +20,13 @@ class Purchase < ActiveRecord::Base
   end
 
   def increment_products_counter_cache
-    unless self.products.users.find_by(id: self.user_id)
+    unless self.product.users.find_by(id: self.user_id)
       Product.increment_counter('users_count', self.product.id)
     end
   end
 
   def decrement_products_counter_cache
-    if self.products.users.find_by(id: self.user_id)
+    if self.product.users.find_by(id: self.user_id)
       Product.decrement_counter('users_count', self.product.id)
     end
   end
