@@ -3,12 +3,13 @@ class CreateProducts < ActiveRecord::Migration
     create_table :products do |t|
       t.string :name, null:false
       t.float :price, null:false
-      t.string :category
-      t.text :description
-      t.integer :quantity
-      t.string :image
-      t.integer :carts_counter, default: 0
+      t.string :category, default: "N/A"
+      t.text :description, default: "N/A"
+      t.integer :quantity, default: 0
+      t.string :image, default: "http://img1.wikia.nocookie.net/__cb20141028171337/pandorahearts/images/a/ad/Not_available.jpg"
+      t.integer :cart_items_counter, default: 0
       t.integer :purchases_counter, default: 0
+      t.integer :users_counter, default: 0
 
       t.timestamps null: false
     end

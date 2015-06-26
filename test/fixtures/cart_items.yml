@@ -2,12 +2,8 @@
 
 one:
   user_id: 
-  item_id: 
-  purchased: false
-  cart: false
+  product_id: 
 
 two:
   user_id: 
-  item_id: 
-  purchased: false
-  cart: false
+  product_id: 
