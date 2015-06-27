@@ -7,14 +7,20 @@
 @import 'users';
 @import 'welcome';
 
-//You need to now manually import every other scss file.
+$bg_color: lighten(black, 10%);
+$txt_color: lighten(#333333, 10%);
 body {
-  background: lighten(black, 10%);
-  color: #333333;
+  background: $bg_color;
+  color: $txt_color;
   font-family: Courier New;
+  font-weight: 600;
 }
 
-.header{
+a {
+  color: $txt_color;
+}
+
+.header {
   height: 70px;
   display: flex;
   justify-content:center;
@@ -22,6 +28,10 @@ body {
   flex-direction:column;
 }
 
-.header-text{
-  font-size: 2.5em;
+.header-text {
+  font-size: 3em;
+}
+
+.sidebar {
+  padding: 0;
 }
