@@ -1,14 +1,14 @@
 /* globals React */
 'use strict';
+
 var List = React.createClass({
   getInitialState: function () {
     return {
-      page: 1,
-      limit: 10,
-      sort_by: "recent"
+      page: 1
     };
   },
   render: function () {
+    var limit = 10;
     var rows = [];
     var i_0 = (this.state.page - 1) * limit;
     var i_f = 0;
