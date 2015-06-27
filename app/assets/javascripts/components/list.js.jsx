@@ -4,32 +4,33 @@
 var List = React.createClass({
   getInitialState: function () {
     return {
-      page: 1
+      data: this.props.data,
+      page: 1,
+      limit: this.props.limit,
     };
   },
   render: function () {
-    var limit = 10;
     var rows = [];
-    var i_0 = (this.state.page - 1) * limit;
+    var i_0 = (this.state.page - 1) * this.state.limit;
     var i_f = 0;
 
-    if (this.props.data.length < (this.state.page * limit)) {
-      i_f = this.props.data.length;
+    if (this.props.data.length < (this.state.page * this.state.limit)) {
+      i_f = this.state.data.length;
     } else {
-      i_f = i_0 + limit;
+      i_f = i_0 + this.state.limit;
     }
 
     for (var i = i_0; i < i_f; i++) {
-      rows.push(<DataRow elem={ this.props.data[i] } type={ this.props.type } />);
+      rows.push(<DataRow elem={ this.state.data[i] } type={ this.props.type } />);
     }
 
-    if (this.state.page === 1 && i_f === this.props.data.length) {
+    if (this.state.page === 1 && i_f === this.state.data.length) {
       return (
         <div>
           <div>{rows}</div>
         </div>
       )
-    } else if (this.state.page === 1 && i_f < this.props.data.length) {
+    } else if (this.state.page === 1 && i_f < this.state.data.length) {
       return (
         <div>
           <div>{rows}</div>
@@ -39,7 +40,7 @@ var List = React.createClass({
           </div>
         </div>
       )
-    } else if (i_f < this.props.data.length) {
+    } else if (i_f < this.state.data.length) {
       return (
         <div>
           <div>{rows}</div>

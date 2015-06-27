@@ -34,3 +34,17 @@ a {
 .sidebar {
   padding: 0;
 }
+
+.list-header-text {
+  font-size: 2em;
+}
+
+.sort-bar {
+  height: 40px;
+  line-height: 40px;
+}
+
+.sort-elem{
+  display: inline-block;
+  margin: 0 0.25em;
+}

@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
+    sort_by = product_params_weak.fetch("sort_by", "created_at")
+    sort_dir = product_params_weak.fetch("sort_dir", "DESC")
+    @products = Product.order("#{sort_by} #{sort_dir}")
   end
 
   def new
@@ -20,5 +22,15 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def product_params_strong
+    params.require(:product).permit(:name, :price, :category, :description, :quantity, :image, :cart_items_count, :purchases_count, :users_count, :sort_by, :sort_dir)
+  end
+
+  def product_params_weak
+    params.permit(:name, :price, :category, :description, :quantity, :image, :cart_items_count, :purchases_count, :users_count, :sort_by, :sort_dir)
   end
 end
