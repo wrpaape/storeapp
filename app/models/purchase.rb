@@ -8,7 +8,7 @@ class Purchase < ActiveRecord::Base
   private
 
   def increment_users_counter_cache
-    unless self.user.products.find_by(id: self.product_id)
+    unless self.user.products.where(id: self.product_id).size > 1
       User.increment_counter('products_count', self.user.id)
     end
   end
@@ -20,7 +20,7 @@ class Purchase < ActiveRecord::Base
   end
 
   def increment_products_counter_cache
-    unless self.product.users.find_by(id: self.user_id)
+    unless self.product.users.where(id: self.user_id).size > 1
       Product.increment_counter('users_count', self.product.id)
     end
   end
