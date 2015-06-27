@@ -27,12 +27,24 @@ var List = React.createClass({
     if (this.state.page === 1 && i_f === this.state.data.length) {
       return (
         <div>
+          <div className="row">
+            <div className="col-sm-3 list-header-text">
+              Products
+            </div>
+            <Sort parent={ this } />
+          </div>
           <div>{rows}</div>
         </div>
       )
     } else if (this.state.page === 1 && i_f < this.state.data.length) {
       return (
         <div>
+          <div className="row">
+            <div className="col-sm-3 list-header-text">
+              Products
+            </div>
+            <Sort parent={ this } />
+          </div>
           <div>{rows}</div>
           <div className='row'>
             <div className='col-sm-2 next-prev'></div>
@@ -43,6 +55,12 @@ var List = React.createClass({
     } else if (i_f < this.state.data.length) {
       return (
         <div>
+          <div className="row">
+            <div className="col-sm-3 list-header-text">
+              Products
+            </div>
+            <Sort parent={ this } />
+          </div>
           <div>{rows}</div>
           <div className='row'>
             <div onClick={ this.clicked.bind(this, -1)  } className='col-sm-2 btn btn-default next-prev'>Prev</div>
@@ -53,6 +71,12 @@ var List = React.createClass({
     } else {
       return (
         <div>
+          <div className="row">
+            <div className="col-sm-3 list-header-text">
+              Products
+            </div>
+            <Sort parent={ this } />
+          </div>
           <div>{rows}</div>
           <div className='row'>
             <div onClick={ this.clicked.bind(this, -1) } className='col-sm-2 btn btn-default next-prev'>Prev</div>
@@ -63,6 +87,45 @@ var List = React.createClass({
   },
   clicked: function (val) {
     this.setState({ page: this.state.page + val });
+  }
+});
+
+var Sort = React.createClass({
+  getInitialState: function () {
+    return {
+      sort_by: 'created_at',
+      sort_dir: 'DESC'
+    };
+  },
+  render: function() {
+    return (
+      <div className='sort-bar'>
+        <div className='sort-elem'>
+          sort by:
+        </div>
+        <div className='sort-elem'>
+          <select onClick={ this.clicked.bind(this, 'DESC') } name='sort_dir'>
+            <option onClick={ this.clicked.bind(this, 'DESC') } >most</option>
+            <option onClick={ this.clicked.bind(this, 'ASC') } >least</option>
+          </select>
+        </div>
+        <div className='sort-elem'>
+          <select name='sort_by'>
+            <option onClick={ this.clicked.bind(this, 'created_at') } >recent</option>
+            <option onClick={ this.clicked.bind(this, 'price') } >expensive</option>
+            <option onClick={ this.clicked.bind(this, 'users_count') } >popular</option>
+            <option onClick={ this.clicked.bind(this, 'purchases_count') } >purchased</option>
+            <option onClick={ this.clicked.bind(this, 'quantity') } >in stock</option>
+          </select>
+        </div>
+      </div>
+    )
+  },
+  clicked: function (val) {
+    this.setState({ page: 2 });
+    // $.getJSON(URL, function (data) {
+    //             this.setState({ loading: false, records: data });
+    //         }.bind(this));
   }
 });
 

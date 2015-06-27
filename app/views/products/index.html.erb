@@ -1,7 +1,1 @@
-<div class="row">
-  <div class="col-sm-3 list-header-text">
-    Products
-  </div>
-  <%= react_component("Sort") %>
-</div>
-<%= react_component("List", { data: @products, type: "products", limit: 10 }) %>
+<%= react_component("List", { data: @products, type: "products", limit: 10 }, {id: 'List'}) %>
