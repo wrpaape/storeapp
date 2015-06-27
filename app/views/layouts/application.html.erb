@@ -7,8 +7,46 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 header header-text">
+      The Grey Market
+    </div>
+    <div class="col-sm-4 header">
+        <% if @current_user %>
+          <%= "hello, #{@current_user.name}" %>
+        <% else %>
+          <%= " " %>
+        <% end %>
+      </div>
+    <div class="col-sm-2 header sidebar">
+        <% if flash[:notice] || flash[:alert] %>
+          <% flash.each do |name, msg| %>
+            <%= content_tag(:div, msg, { class: "flash #{name}" }) %>
+          <% end %>
+        <% else %>
+          <div class="row header"> </div>
+        <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-10">
+      <%= yield %>
+    </div>
+    <div class="col-sm-2 sidebar">
+      <ul>
+        <li> <%= link_to 'sign up', new_user_path %></li>
+          <% if logged_in? %>
+            <li><%= link_to 'logout', logout_path %></li>
+            <li><%= link_to 'my profile', user_path(@current_user) %></li>
+            <li><%= link_to 'my cart', cart_items_path(@current_user) %></li>
+          <% else %>
+            <li><%= link_to 'login', login_path %></li>
+          <% end %>
+        <li><%= link_to("all users", users_path) %></li>
+      </ul>
+    </div>
+</div>
 
 </body>
 </html>

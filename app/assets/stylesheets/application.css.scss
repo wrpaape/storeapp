@@ -1,3 +1,27 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+@import 'cart_items';
+@import 'products';
+@import 'purchases';
+@import 'sessions';
+@import 'users';
+@import 'welcome';
+
 //You need to now manually import every other scss file.
+body {
+  background: lighten(black, 10%);
+  color: #333333;
+  font-family: Courier New;
+}
+
+.header{
+  height: 70px;
+  display: flex;
+  justify-content:center;
+  align-content:center;
+  flex-direction:column;
+}
+
+.header-text{
+  font-size: 2.5em;
+}
