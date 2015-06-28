@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   def index
-    sort_by = product_params_weak.fetch("sort_by", "created_at")
-    sort_dir = product_params_weak.fetch("sort_dir", "DESC")
+    sort_by = product_params_weak["sort_by"]
+    sort_dir = product_params_weak["sort_dir"]
     @products = Product.order("#{sort_by} #{sort_dir}")
     respond_to do |format|
       format.html
@@ -10,16 +10,15 @@ class ProductsController < ApplicationController
   end
 
   def search
-    sort_by = product_params_weak.fetch("sort_by", "created_at")
-    sort_dir = product_params_weak.fetch("sort_dir", "DESC")
-    name = "%" + product_params_weak.fetch("name", "") + "%"
-    category = "%" + product_params_weak.fetch("category", "") + "%"
-    price_low = product_params_weak.fetch("price_low", "0")
-    price_high = product_params_weak.fetch("price_high", Product.maximum(:price) + 1)
-    @products = Product.where("name LIKE '#{name}' AND
-                               category LIKE '#{category}' AND
-                               price > '#{price_low}' AND
-                               price < '#{price_high}'").order("#{sort_by} #{sort_dir}")
+    sort_by = product_params_weak["sort_by"]
+    sort_dir = product_params_weak["sort_dir"]
+    name = "%" + product_params_weak["name"].to_s + "%"
+    category = "%" + product_params_weak["category"].to_s + "%"
+    price_min = product_params_weak["price_min"].to_s
+    price_max = product_params_weak["price_max"].to_s
+    price_min = 0 if price_min == ""
+    price_max = (Product.maximum(:price) + 1) if price_max == ""
+    @products = Product.where("name LIKE '#{name}' AND category LIKE '#{category}' AND price > #{price_min} AND price < #{price_max}").order("#{sort_by} #{sort_dir}")
     respond_to do |format|
       format.html
       format.json { render json: @products }
@@ -49,10 +48,10 @@ class ProductsController < ApplicationController
   private
 
   def product_params_strong
-    params.require(:product).permit(:name, :price, :category, :description, :quantity, :image, :cart_items_count, :purchases_count, :users_count, :sort_by, :sort_dir)
+    params.require(:product).permit(:name, :price, :category, :description, :quantity, :image, :cart_items_count, :purchases_count, :users_count, :sort_by, :sort_dir, :price_min, :price_max)
   end
 
   def product_params_weak
-    params.permit(:name, :price, :category, :description, :quantity, :image, :cart_items_count, :purchases_count, :users_count, :sort_by, :sort_dir)
+    params.permit(:name, :price, :category, :description, :quantity, :image, :cart_items_count, :purchases_count, :users_count, :sort_by, :sort_dir, :price_min, :price_max)
   end
 end

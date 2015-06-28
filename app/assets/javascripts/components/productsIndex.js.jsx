@@ -14,7 +14,7 @@ var ProductsIndex = React.createClass({
     var i_0 = (this.state.page - 1) * this.state.limit;
     var i_f = 0;
 
-    if (this.props.data.length < (this.state.page * this.state.limit)) {
+    if (this.state.data.length < (this.state.page * this.state.limit)) {
       i_f = this.state.data.length;
     } else {
       i_f = i_0 + parseInt(this.state.limit);
