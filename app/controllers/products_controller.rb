@@ -18,7 +18,7 @@ class ProductsController < ApplicationController
     price_max = product_params_weak["price_max"].to_s
     price_min = 0 if price_min == ""
     price_max = (Product.maximum(:price) + 1) if price_max == ""
-    @products = Product.where("name LIKE '#{name}' AND category LIKE '#{category}' AND price > #{price_min} AND price < #{price_max}").order("#{sort_by} #{sort_dir}")
+    @products = Product.where("lower(name) LIKE lower('#{name}') AND lower(category) LIKE lower('#{category}') AND price > #{price_min} AND price < #{price_max}").order("#{sort_by} #{sort_dir}")
     respond_to do |format|
       format.html
       format.json { render json: @products }

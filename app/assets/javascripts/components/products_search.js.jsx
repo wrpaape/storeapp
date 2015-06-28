@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var ProductsIndex = React.createClass({
+var ProductSearch = React.createClass({
   getInitialState: function () {
     return {
       data: this.props.data,
@@ -42,9 +42,10 @@ var ProductsIndex = React.createClass({
         <div>
           <div className="row">
             <div className="col-sm-3 list-header-text">
-              Products
+              Results
             </div>
             <Sort parent={ this } />
+            <Search parent={ this } />
           </div>
           <div>{rows}</div>
         </div>
@@ -54,9 +55,10 @@ var ProductsIndex = React.createClass({
         <div>
           <div className="row">
             <div className="col-sm-3 list-header-text">
-              Products
+              Results
             </div>
             <Sort parent={ this } />
+            <Search parent={ this } />
           </div>
           <div>{rows}</div>
           <div className='row'>
@@ -70,9 +72,10 @@ var ProductsIndex = React.createClass({
         <div>
           <div className="row">
             <div className="col-sm-3 list-header-text">
-              Products
+              Results
             </div>
             <Sort parent={ this } />
+            <Search parent={ this } />
           </div>
           <div>{rows}</div>
           <div className='row'>
@@ -86,9 +89,10 @@ var ProductsIndex = React.createClass({
         <div>
           <div className="row">
             <div className="col-sm-3 list-header-text">
-              Products
+              Results
             </div>
             <Sort parent={ this } />
+            <Search parent={ this } />
           </div>
           <div>{rows}</div>
           <div className='row'>
@@ -158,6 +162,53 @@ var Sort = React.createClass({
   limited: function () {
     var new_limit = $('#limit').val();
     this.state.parent.setState({ limit: new_limit });
+  }
+});
+
+var Search = React.createClass({
+  getInitialState: function () {
+    return {
+      parent: this.props.parent
+    };
+  },
+  render: function() {
+    return (
+      <div className='row search-bar'>
+        <div className='limit-elem'>
+          <span>name: </span>
+          <input id='name' size='10' type='text' onChange={ this.changed }/>
+          <span> category: </span>
+          <input id='category' size='10' type='text' onChange={ this.changed }/>
+          <span> min price: $</span>
+          <input id='price_min' size='5' type='text' onChange={ this.changed }/>
+          <span> max price: $</span>
+          <input id='price_max' size='5' type='text' onChange={ this.changed }/>
+        </div>
+      </div>
+    )
+  },
+  changed: function () {
+    var sort_dir = $('#sort_dir').val();
+    var sort_by = $('#sort_by').val();
+    var name = $('#name').val();
+    var category = $('#category').val();
+    var price_min = $('#price_min').val();
+    var price_max = $('#price_max').val();
+    var list = this.state.parent;
+    var url = '/products/search'
+    $.getJSON(url,
+      {
+        sort_dir: sort_dir,
+        sort_by: sort_by,
+        name: name,
+        category: category,
+        price_min: price_min,
+        price_max: price_max
+      },
+      function (new_data) {
+        list.setState({ data: new_data, page: 1 });
+      }
+    );
   }
 });
 
