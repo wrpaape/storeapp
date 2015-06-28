@@ -23,6 +23,10 @@ input {
   height: 20px;
 }
 
+.btn-default {
+  background-color: $bg_color;
+  color: $txt_color;
+}
 .header {
   height: 70px;
   display: flex;
@@ -37,6 +41,10 @@ input {
 
 .sidebar {
   padding: 0;
+}
+
+.sidebar-link {
+  margin-top: 1em;
 }
 
 .list-header-text {
@@ -71,4 +79,18 @@ input {
 .thumbnail {
   width: 60px;
   margin-top: 8px;
+}
+
+.show-details {
+  margin-top: 1.5em;
+  font-size: 1.5em;
+}
+
+.show-image {
+  width: 120px;
+}
+
+.description {
+  margin-top: 1em;
+  font-size: 0.75em;
 }

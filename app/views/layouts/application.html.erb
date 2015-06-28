@@ -34,17 +34,7 @@
       <%= yield %>
     </div>
     <div class="col-sm-2 sidebar">
-      <ul>
-        <li> <%= link_to 'sign up', new_user_path %></li>
-          <% if logged_in? %>
-            <li><%= link_to 'logout', logout_path %></li>
-            <li><%= link_to 'my profile', user_path(@current_user) %></li>
-            <li><%= link_to 'my cart', cart_items_path(@current_user) %></li>
-          <% else %>
-            <li><%= link_to 'login', login_path %></li>
-          <% end %>
-        <li><%= link_to("all users", users_path) %></li>
-      </ul>
+      <%= react_component("Navigation", { user: @current_user, logged_in: session[:user_id] }) %>
     </div>
 </div>
 
