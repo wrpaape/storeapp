@@ -24,14 +24,14 @@ var ProductSearch = React.createClass({
       if (i < (i_f - 1)) {
         rows.push(
           <div className="row">
-            <ListItem elem={ this.state.data[i] } />
-            <ListItem elem={ this.state.data[i + 1] } />
+            <ListItem elem={ this.state.data[i] } user={ this.props.user } />
+            <ListItem elem={ this.state.data[i + 1] } user={ this.props.user } />
           </div>
         );
       } else {
         rows.push(
           <div className="row">
-            <ListItem elem={ this.state.data[i] } />
+            <ListItem elem={ this.state.data[i] } user={ this.props.user } />
           </div>
         );
       }
@@ -241,15 +241,47 @@ var ListItem = React.createClass({
             </div>
           </div>
           <div className='row'>
-            <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
-            <NavLink name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' parent={ this } />
-            <NavLink name='Destroy' url={ '/products/' + this.props.elem.id } method='DELETE' parent={ this } />
+            <ButtonBar elem={ this.props.elem } user={ this.props.user } parent={ this } />
           </div>
         </div>
       </div>
     )
     } else {
       return (<div></div>)
+    }
+  }
+});
+
+var ButtonBar = React.createClass({
+  getInitialState: function () {
+    return {
+        parent: this.props.parent
+    };
+  },
+  render: function () {
+    if (this.props.user !== null) {
+      if (this.props.user.admin === true) {
+        return (
+          <div>
+            <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
+            <NavLink name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' parent={ this } />
+            <NavLink name='Destroy' url={ '/products/' + this.props.elem.id } method='DELETE' parent={ this } />
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
+            <NavLink name='Add to Cart' url={ '/users/' + this.props.user.id + '/cart/' + this.props.elem.id } method='POST' parent={ this } />
+          </div>
+        )
+      }
+    } else {
+      return (
+        <div>
+          <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
+        </div>
+      )
     }
   }
 });

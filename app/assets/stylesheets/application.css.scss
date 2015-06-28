@@ -8,6 +8,49 @@
 
 $bg_color: lighten(black, 10%);
 $txt_color: lighten(#333333, 10%);
+
+@mixin fade-in {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:1s;
+  -moz-animation-duration:1s;
+  animation-duration:1s;
+}
+
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.flash {
+  text-align: center;
+  -moz-border-radius: 0.5em; //for mozilla support
+  -webkit-border-radius: 0.5em; //for chrome support
+  border-radius: 0.5em;
+  display: flex;
+  justify-content:center;
+  align-content:center;
+  flex-direction:column;
+  background: $bg_color;
+  height: 3em;
+  padding: 0.5em;
+  @include fade-in;
+}
+
+.notice {
+  color: green;
+}
+
+.alert {
+  color: red;
+}
+
 body {
   background: $bg_color;
   color: $txt_color;

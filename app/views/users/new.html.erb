@@ -1,2 +1,40 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<%= form_for(User.new, class: "form-group") do |f| %>
+  <div class="form-inline">
+    <div class="col-sm-12 form-group"></br>
+      <div class="row">
+        <label for="name" class="control-label col-sm-2">name</label>
+        <%= f.text_field(:name, { placeholder: "john smith", id: "name", class: "col-sm-3" })  %>
+      </div>
+    </div>
+  </div>
+  <div class="form-inline">
+    <div class="col-sm-12 form-group"></br>
+      <div class="row">
+        <label for="email" class="control-label col-sm-2">email</label>
+        <%= f.text_field(:email, { placeholder: "example@example.com", id: "email", class: "col-sm-3", type: "email" })  %>
+      </div>
+    </div>
+  </div>
+  <div class="form-inline">
+    <div class="col-sm-12 form-group"></br>
+      <div class="row">
+        <label for="password" class="control-label col-sm-2">password</label>
+        <%= f.password_field(:password, { id: "password", class: "col-sm-3", type: "password" })  %>
+      </div>
+    </div>
+  </div>
+  <div class="form-inline">
+    <div class="col-sm-12 form-group"></br>
+      <div class="row">
+        <label for="password_confirmation" class="control-label col-sm-2" style="padding-left: 0;">confirm pass</label>
+        <%= f.password_field(:password_confirmation, { id: "password_confirmation", class: "col-sm-3", type: "password" })  %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-3 submit-wrap"></br>
+      <%= submit_tag "submit", class: "btn btn-default submit" %>
+    </div>
+  </div>
+<% end %>
