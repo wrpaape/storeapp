@@ -171,15 +171,15 @@ var ListItem = React.createClass({
     if (this.state.show === 'true') {
     return (
       <div>
-        <div className='col-sm-5'>
+        <div className='col-sm-6'>
           <div className='row list-item'>
             <a href= { '/products/' + this.props.elem.id } >{ this.props.elem.name }</a>
           </div>
           <div className='row'>
-            <div className='col-sm-4'>
+            <div className='col-sm-3'>
               <img src={ this.props.elem.image } className="thumbnail" />
             </div>
-            <div className='col-sm-7'>
+            <div className='col-sm-9'>
               <ul className='details'>
                 <li>price: ${ this.props.elem.price }</li>
                 <li>owned by { this.props.elem.users_count } users</li>

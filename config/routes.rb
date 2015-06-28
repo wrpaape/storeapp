@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'products/search'
+
   resources :users, :products, :cart_items, :purchases
 
   get  'login', to: 'sessions#new',    as: 'login'

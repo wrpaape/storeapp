@@ -27,6 +27,14 @@ input {
   background-color: $bg_color;
   color: $txt_color;
 }
+
+.next-prev{
+  margin-top: 2em;
+  margin-right: 1em;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
 .header {
   height: 70px;
   display: flex;
@@ -49,6 +57,7 @@ input {
 
 .list-header-text {
   font-size: 2em;
+  text-decoration: underline;
 }
 
 .sort-bar {

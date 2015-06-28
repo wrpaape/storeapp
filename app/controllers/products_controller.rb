@@ -9,6 +9,23 @@ class ProductsController < ApplicationController
     end
   end
 
+  def search
+    sort_by = product_params_weak.fetch("sort_by", "created_at")
+    sort_dir = product_params_weak.fetch("sort_dir", "DESC")
+    name = "%" + product_params_weak.fetch("name", "") + "%"
+    category = "%" + product_params_weak.fetch("category", "") + "%"
+    price_low = product_params_weak.fetch("price_low", "0")
+    price_high = product_params_weak.fetch("price_high", Product.maximum(:price) + 1)
+    @products = Product.where("name LIKE '#{name}' AND
+                               category LIKE '#{category}' AND
+                               price > '#{price_low}' AND
+                               price < '#{price_high}'").order("#{sort_by} #{sort_dir}")
+    respond_to do |format|
+      format.html
+      format.json { render json: @products }
+    end
+  end
+
   def new
     @product = Product.new
   end
