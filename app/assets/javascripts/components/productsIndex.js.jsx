@@ -204,7 +204,7 @@ var ListItem = React.createClass({
 var ButtonBar = React.createClass({
   getInitialState: function () {
     return {
-        parent: this.props.parent
+        grandparent: this.props.parent
     };
   },
   render: function () {
@@ -212,23 +212,23 @@ var ButtonBar = React.createClass({
       if (this.props.user.admin === true) {
         return (
           <div>
-            <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
-            <NavLink name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' parent={ this } />
-            <NavLink name='Destroy' url={ '/products/' + this.props.elem.id } method='DELETE' parent={ this } />
+            <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } />
+            <NavLink name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' grandparent={ this.state.grandparent } />
+            <NavLink name='Destroy' url={ '/products/' + this.props.elem.id } method='DELETE' grandparent={ this.state.grandparent } />
           </div>
         )
       } else {
           return (
             <div>
-              <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
-              <NavLink name='Add to Cart' url={ '/users/' + this.props.user.id + '/cart/' + this.props.elem.id } method='POST' parent={ this } />
+              <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } />
+              <NavLink name='Add to Cart' url={ '/users/' + this.props.user.id + '/cart/' + this.props.elem.id } method='POST' grandparent={ this.state.grandparent } />
             </div>
         )
       }
     } else {
       return (
         <div>
-          <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
+          <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } />
         </div>
       )
     }
@@ -238,7 +238,7 @@ var ButtonBar = React.createClass({
 var NavLink = React.createClass({
   getInitialState: function () {
     return {
-        grandparent: this.props.parent
+        greatgrandparent: this.props.grandparent
     };
   },
   render: function () {
@@ -249,8 +249,8 @@ var NavLink = React.createClass({
       $.ajax({
         url: this.props.url,
         type: 'DELETE',
-        success: function () {
-          this.state.grandparent.setState({ show: 'false'});
+        error: function () {
+          this.state.greatgrandparent.setState({ show: 'false'});
         }.bind(this)
       });
     } else {
