@@ -160,15 +160,22 @@ var DataRow = React.createClass({
       <div className='row'>
         <div className='col-sm-1'></div>
         <div className='col-sm-9'>
-          <div className='row'>
-            <a href= { '/products/' + this.props.elem.id } className='list-item'>{ this.props.elem.name }</a>
+          <div className='row list-item'>
+            <a href= { '/products/' + this.props.elem.id } >{ this.props.elem.name }</a>
           </div>
-          <ul>
-            <li>price: ${this.props.elem.price}</li>
-            <li>owned by {this.props.elem.users_count} users</li>
-            <li>purchased {this.props.elem.purchases_count} times</li>
-            <li>{this.props.elem.quantity} left in stock</li>
-          </ul>
+          <div className='row'>
+            <div className='col-sm-2'>
+              <img src={ this.props.elem.image } className="thumbnail" />
+            </div>
+            <div className='col-sm-7'>
+              <ul className='details'>
+                <li>price: ${ this.props.elem.price }</li>
+                <li>owned by { this.props.elem.users_count } users</li>
+                <li>purchased { this.props.elem.purchases_count } times</li>
+                <li>{ this.props.elem.quantity } left in stock</li>
+              </ul>
+            </div>
+          </div>
           <div className='row'>
             <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
             <NavLink name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' parent={ this } />

@@ -40,17 +40,17 @@ ActiveRecord::Schema.define(version: 20150626213453) do
   add_index "cart_items", ["user_id"], name: "index_cart_items_on_user_id", using: :btree
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",                                                                                                                       null: false
-    t.float    "price",                                                                                                                      null: false
+    t.string   "name",                             null: false
+    t.float    "price",                            null: false
     t.string   "category",         default: "N/A"
     t.text     "description",      default: "N/A"
     t.integer  "quantity",         default: 0
-    t.string   "image",            default: "http://img1.wikia.nocookie.net/__cb20141028171337/pandorahearts/images/a/ad/Not_available.jpg", null: false
+    t.string   "image"
     t.integer  "cart_items_count", default: 0
     t.integer  "purchases_count",  default: 0
     t.integer  "users_count",      default: 0
-    t.datetime "created_at",                                                                                                                 null: false
-    t.datetime "updated_at",                                                                                                                 null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "purchases", force: :cascade do |t|
