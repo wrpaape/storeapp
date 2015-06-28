@@ -19,6 +19,10 @@ a {
   color: $txt_color;
 }
 
+input {
+  height: 20px;
+}
+
 .header {
   height: 70px;
   display: flex;
@@ -49,12 +53,12 @@ a {
   margin: 0 0.25em;
 }
 
-input {
-  height: 20px;
-}
-
 .limit-elem {
   display: inline-block;
   margin: 0 0.25em;
   line-height: 1em;
+}
+
+.list-item {
+  font-size: 1.5em;
 }

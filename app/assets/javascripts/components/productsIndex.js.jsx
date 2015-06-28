@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var List = React.createClass({
+var ProductsIndex = React.createClass({
   getInitialState: function () {
     return {
       data: this.props.data,
@@ -21,7 +21,7 @@ var List = React.createClass({
     }
 
     for (var i = i_0; i < i_f; i++) {
-      rows.push(<DataRow elem={ this.state.data[i] } type={ this.props.type } />);
+      rows.push(<DataRow elem={ this.state.data[i] } />);
     }
 
     if (this.state.page === 1 && i_f === this.state.data.length) {
@@ -121,8 +121,8 @@ var Sort = React.createClass({
         </div>
         <div className='limit-elem'>
           <span>show </span>
-          <input size='3' type='text' />
-          <span> items</span>
+          <input id='limit' size='3' type='text' onChange={ this.limited }/>
+          <span> items per page</span>
         </div>
       </div>
     )
@@ -131,7 +131,7 @@ var Sort = React.createClass({
     var sort_dir = $('#sort_dir').val();
     var sort_by = $('#sort_by').val();
     var list = this.state.parent;
-    var url = '/' + list.props.type
+    var url = '/products'
     $.getJSON(url,
       {
         sort_dir: sort_dir,
@@ -141,6 +141,10 @@ var Sort = React.createClass({
         list.setState({ data: new_data, page: 1 });
       }
     );
+  },
+  limited: function () {
+    var new_limit = $('#limit').val();
+    this.state.parent.setState({ limit: new_limit });
   }
 });
 
@@ -156,10 +160,20 @@ var DataRow = React.createClass({
       <div className='row'>
         <div className='col-sm-1'></div>
         <div className='col-sm-9'>
-          <h4>{ this.props.elem.name }</h4>
-          <NavLink name='Show' url={ '/' + this.props.type + '/' + this.props.elem.id } method='GET' parent={ this } />
-          <NavLink name='Edit' url={ '/' + this.props.type + '/' + this.props.elem.id + '/edit' } method='GET' parent={ this } />
-          <NavLink name='Destroy' url={ '/' + this.props.type + '/' + this.props.elem.id } method='DELETE' parent={ this } />
+          <div className='row'>
+            <a href= { '/products/' + this.props.elem.id } className='list-item'>{ this.props.elem.name }</a>
+          </div>
+          <ul>
+            <li>price: ${this.props.elem.price}</li>
+            <li>owned by {this.props.elem.users_count} users</li>
+            <li>purchased {this.props.elem.purchases_count} times</li>
+            <li>{this.props.elem.quantity} left in stock</li>
+          </ul>
+          <div className='row'>
+            <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' parent={ this } />
+            <NavLink name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' parent={ this } />
+            <NavLink name='Destroy' url={ '/products/' + this.props.elem.id } method='DELETE' parent={ this } />
+          </div>
         </div>
       </div>
     )
