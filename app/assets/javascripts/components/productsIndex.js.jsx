@@ -17,11 +17,24 @@ var ProductsIndex = React.createClass({
     if (this.props.data.length < (this.state.page * this.state.limit)) {
       i_f = this.state.data.length;
     } else {
-      i_f = i_0 + this.state.limit;
+      i_f = i_0 + parseInt(this.state.limit);
     }
 
-    for (var i = i_0; i < i_f; i++) {
-      rows.push(<DataRow elem={ this.state.data[i] } />);
+    for (var i = i_0; i < i_f; i+=2) {
+      if (i < (i_f - 1)) {
+        rows.push(
+          <div className="row">
+            <ListItem elem={ this.state.data[i] } />
+            <ListItem elem={ this.state.data[i + 1] } />
+          </div>
+        );
+      } else {
+        rows.push(
+          <div className="row">
+            <ListItem elem={ this.state.data[i] } />
+          </div>
+        );
+      }
     }
 
     if (this.state.page === 1 && i_f === this.state.data.length) {
@@ -148,7 +161,7 @@ var Sort = React.createClass({
   }
 });
 
-var DataRow = React.createClass({
+var ListItem = React.createClass({
   getInitialState: function () {
     return {
       show: 'true'
@@ -157,14 +170,13 @@ var DataRow = React.createClass({
   render: function () {
     if (this.state.show === 'true') {
     return (
-      <div className='row'>
-        <div className='col-sm-1'></div>
-        <div className='col-sm-9'>
+      <div>
+        <div className='col-sm-5'>
           <div className='row list-item'>
             <a href= { '/products/' + this.props.elem.id } >{ this.props.elem.name }</a>
           </div>
           <div className='row'>
-            <div className='col-sm-2'>
+            <div className='col-sm-4'>
               <img src={ this.props.elem.image } className="thumbnail" />
             </div>
             <div className='col-sm-7'>
