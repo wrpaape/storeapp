@@ -3,6 +3,10 @@ class ProductsController < ApplicationController
     sort_by = product_params_weak.fetch("sort_by", "created_at")
     sort_dir = product_params_weak.fetch("sort_dir", "DESC")
     @products = Product.order("#{sort_by} #{sort_dir}")
+    respond_to do |format|
+      format.html
+      format.json { render json: @products }
+    end
   end
 
   def new

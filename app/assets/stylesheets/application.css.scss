@@ -44,7 +44,17 @@ a {
   line-height: 40px;
 }
 
-.sort-elem{
+.sort-elem {
   display: inline-block;
   margin: 0 0.25em;
+}
+
+input {
+  height: 20px;
+}
+
+.limit-elem {
+  display: inline-block;
+  margin: 0 0.25em;
+  line-height: 1em;
 }

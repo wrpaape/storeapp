@@ -93,6 +93,7 @@ var List = React.createClass({
 var Sort = React.createClass({
   getInitialState: function () {
     return {
+      parent: this.props.parent,
       sort_by: 'created_at',
       sort_dir: 'DESC'
     };
@@ -104,28 +105,42 @@ var Sort = React.createClass({
           sort by:
         </div>
         <div className='sort-elem'>
-          <select onClick={ this.clicked.bind(this, 'DESC') } name='sort_dir'>
-            <option onClick={ this.clicked.bind(this, 'DESC') } >most</option>
-            <option onClick={ this.clicked.bind(this, 'ASC') } >least</option>
+          <select id='sort_dir' onChange={ this.selected } >
+            <option value='DESC'>most</option>
+            <option value='ASC'>least</option>
           </select>
         </div>
         <div className='sort-elem'>
-          <select name='sort_by'>
-            <option onClick={ this.clicked.bind(this, 'created_at') } >recent</option>
-            <option onClick={ this.clicked.bind(this, 'price') } >expensive</option>
-            <option onClick={ this.clicked.bind(this, 'users_count') } >popular</option>
-            <option onClick={ this.clicked.bind(this, 'purchases_count') } >purchased</option>
-            <option onClick={ this.clicked.bind(this, 'quantity') } >in stock</option>
+          <select id='sort_by' onChange={ this.selected }>
+            <option value='created_at'>recent</option>
+            <option value='price'>expensive</option>
+            <option value='users_count'>popular</option>
+            <option value='purchases_count'>purchased</option>
+            <option value='quantity'>in stock</option>
           </select>
+        </div>
+        <div className='limit-elem'>
+          <span>show </span>
+          <input size='3' type='text' />
+          <span> items</span>
         </div>
       </div>
     )
   },
-  clicked: function (val) {
-    this.setState({ page: 2 });
-    // $.getJSON(URL, function (data) {
-    //             this.setState({ loading: false, records: data });
-    //         }.bind(this));
+  selected: function () {
+    var sort_dir = $('#sort_dir').val();
+    var sort_by = $('#sort_by').val();
+    var list = this.state.parent;
+    var url = '/' + list.props.type
+    $.getJSON(url,
+      {
+        sort_dir: sort_dir,
+        sort_by: sort_by
+      },
+      function (new_data) {
+        list.setState({ data: new_data, page: 1 });
+      }
+    );
   }
 });
 
