@@ -19,7 +19,7 @@ var CartItems = React.createClass({
       <div className='row list-item'>
         <div className='col-sm-6'></div>
         <div className='col-sm-6'>
-          ${ Math.abs((this.state.total).toFixed(2)) }
+          ${ Math.abs((this.state.total)).toFixed(2) }
         </div>
       </div>
     );
@@ -66,7 +66,11 @@ var CartItem = React.createClass({
            url: url,
            type: 'DELETE',
            success: function(response) {
+             var old_quantity = old_state.props.elem.quantity;
+             var old_total = old_state.state.total.state.total;
+             var new_total = old_total + ((new_quantity - old_quantity) * old_state.state.product.price);
              this.setState({ show: false });
+             this.state.total.setState({total: new_total});
            }.bind(this)
         });
       } else if (new_quantity < 0) {
