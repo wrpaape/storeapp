@@ -37,6 +37,16 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def cart_index
+    authenticate_user!
+    @user = User.find(params[:id])
+    @cart_items = @user.cart_items
+  end
+
+  def destroy_cart
+
+  end
+
   def edit
   end
 

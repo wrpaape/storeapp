@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-
-  delete 'cart_items', to: 'cart_items#destroy_cart'
+  get 'users/:id/cart', to: 'users#cart_index'
+  delete 'users/:id/cart', to: 'users#destroy_cart'
   get 'products/search'
 
   resources :users, :products, :cart_items, :purchases

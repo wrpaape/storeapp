@@ -1,5 +1,18 @@
 class CartItemsController < ApplicationController
   def index
+    @cart_items = CartItem.all
+    if user_id = product_params_weak[:user_id]
+      user = User.find(user_id)
+      cart_items_arrs = { cart_item_ids: [], product_ids: [] }
+      user.cart_items.each do |cart_item|
+        cart_items_arrs[:cart_item_ids] << cart_item.id
+        cart_items_arrs[:product_ids] << cart_item.product_id
+      end
+    end
+    respond_to do |format|
+      # format.html
+      format.json { render json: cart_items_arrs }
+    end
   end
 
   def new

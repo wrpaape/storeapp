@@ -1,0 +1,7 @@
+<% @cart_items.each.with_index do |cart_item, ind| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= react_component("CartItem", { name: cart_item.product.name, quantity: cart_item.quantity, user: @user }) %>
+    </div>
+  </div>
+<% end %>

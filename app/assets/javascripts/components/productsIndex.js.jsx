@@ -204,7 +204,7 @@ var ListItem = React.createClass({
 var ButtonBar = React.createClass({
   getInitialState: function () {
     return {
-        grandparent: this.props.parent
+      grandparent: this.props.parent
     };
   },
   render: function () {
@@ -212,38 +212,67 @@ var ButtonBar = React.createClass({
       if (this.props.user.admin === true) {
         return (
           <div>
-            <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } />
-            <NavLink name='Add to Cart' url='/cart_items/' method='POST' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
-            <NavLink name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' grandparent={ this.state.grandparent } />
-            <NavLink name='Destroy' url={ '/products/' + this.props.elem.id } method='DELETE' grandparent={ this.state.grandparent } />
+            <NavLink1 name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
+            <NavLink1 name='Add to Cart' url='/cart_items/' method='POST' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
+            <NavLink1 name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
+            <NavLink1 name='Destroy' url={ '/products/' + this.props.elem.id } method='DELETE' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
           </div>
         )
       } else {
-          return (
-            <div>
-              <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } />
-              <NavLink name='Add to Cart' url='/cart_items/' method='POST' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
-            </div>
+        return (
+          <div>
+            <NavLink1 name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
+            <NavLink1 name='Add to Cart' url='/cart_items/' method='POST' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
+          </div>
         )
       }
     } else {
       return (
         <div>
-          <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } />
+          <NavLink1 name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
         </div>
       )
     }
   }
 });
 
-var NavLink = React.createClass({
+var NavLink1 = React.createClass({
   getInitialState: function () {
     return {
-        name: this.props.name,
-        url: this.props.url,
-        method: this.props.method,
-        greatgrandparent: this.props.grandparent
+      name: this.props.name,
+      url: this.props.url,
+      method: this.props.method,
+      greatgrandparent: this.props.grandparent,
+      user_cart_items: []
     };
+  },
+  componentWillMount: function () {
+    var user_cart_items;
+    if (this.state.greatgrandparent.props.user !== null) {
+      $.getJSON('/cart_items/',
+        {
+          user_id: this.state.greatgrandparent.props.user.id
+        },
+        function (cart_items) {
+          // global_cart_items = cart_items;
+          // console.log(global_cart_items);
+            this.setState({ user_cart_items: cart_items });
+          }.bind(this)
+      );
+      if (this.props.name === 'Add to Cart') {
+        var product_id = this.props.product_id;
+        var cart_items = this.state.user_cart_items;
+      // console.log(product_id);
+
+      // console.log(global_cart_items);
+        if ($.inArray(product_id, cart_items.product_ids) > -1) {
+          // console.log('hello');
+          var index = cart_items.product_ids.indexOf(product_id);
+          var cart_item_id = cart_items.cart_item_ids[index];
+          this.setState({ name: 'Remove from Cart', url: '/cart_items/' + cart_item_id, method: 'DELETE' });
+        }
+      }
+    }
   },
   render: function () {
     return (<a onClick={ this.clicked } className='btn btn-default'>{ this.state.name }</a>)
@@ -264,6 +293,7 @@ var NavLink = React.createClass({
           type: 'DELETE',
           success: function () {
             this.setState({ name: 'Add to Cart', url: '/cart_items/', method: 'POST' });
+            this.componentWillMount();
           }.bind(this)
         });
       }
@@ -275,6 +305,7 @@ var NavLink = React.createClass({
          },
         function( cart_item_id ) {
           this.setState({ name: 'Remove from Cart', url: '/cart_items/' + cart_item_id, method: 'DELETE' });
+          this.componentWillMount();
         }.bind(this), "json"
       );
     } else{
