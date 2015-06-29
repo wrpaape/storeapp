@@ -5,26 +5,26 @@ var LoggedOut = React.createClass({
     return (
       <div>
         <div className='row sidebar-link'>
-          <NavLink name='Sign Up' url='/users/new' />
+          <NavLinkSide name='Sign Up' url='/users/new' />
         </div>
         <div className='row sidebar-link'>
-          <NavLink name='Log In' url='/login' />
+          <NavLinkSide name='Log In' url='/login' />
         </div>
         <div className='row sidebar-link'>
-          <NavLink name='Home' url='/' />
+          <NavLinkSide name='Home' url='/' />
         </div>
         <div className='row sidebar-link'>
-          <NavLink name='Search' url='/products/search' />
+          <NavLinkSide name='Search' url='/products/search' />
         </div>
         <div className='row sidebar-link'>
-          <NavLink name='All Users' url='/logout' />
+          <NavLinkSide name='All Users' url='/logout' />
         </div>
       </div>
     );
   }
 });
 
-var NavLink = React.createClass({
+var NavLinkSide = React.createClass({
   render: function () {
     return (<a onClick={this.clicked} className='btn btn-default'>{this.props.name}</a>);
   },

@@ -213,6 +213,7 @@ var ButtonBar = React.createClass({
         return (
           <div>
             <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } />
+            <NavLink name='Add to Cart' url='/cart_items/' method='POST' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
             <NavLink name='Edit' url={ '/products/' + this.props.elem.id + '/edit' } method='GET' grandparent={ this.state.grandparent } />
             <NavLink name='Destroy' url={ '/products/' + this.props.elem.id } method='DELETE' grandparent={ this.state.grandparent } />
           </div>
@@ -221,7 +222,7 @@ var ButtonBar = React.createClass({
           return (
             <div>
               <NavLink name='View' url={ '/products/' + this.props.elem.id } method='GET' grandparent={ this.state.grandparent } />
-              <NavLink name='Add to Cart' url={ '/users/' + this.props.user.id + '/cart/' + this.props.elem.id } method='POST' grandparent={ this.state.grandparent } />
+              <NavLink name='Add to Cart' url='/cart_items/' method='POST' grandparent={ this.state.grandparent } product_id={ this.props.elem.id } />
             </div>
         )
       }
@@ -238,22 +239,45 @@ var ButtonBar = React.createClass({
 var NavLink = React.createClass({
   getInitialState: function () {
     return {
+        name: this.props.name,
+        url: this.props.url,
+        method: this.props.method,
         greatgrandparent: this.props.grandparent
     };
   },
   render: function () {
-    return (<a onClick={ this.clicked } className='btn btn-default'>{ this.props.name }</a>)
+    return (<a onClick={ this.clicked } className='btn btn-default'>{ this.state.name }</a>)
   },
   clicked: function () {
-    if (this.props.method === 'DELETE') {
-      $.ajax({
-        url: this.props.url,
-        type: 'DELETE',
-        error: function () {
-          this.state.greatgrandparent.setState({ show: 'false'});
-        }.bind(this)
-      });
-    } else {
+    if (this.state.method === 'DELETE') {
+      if (this.props.name === 'Destroy') {
+        $.ajax({
+          url: this.props.url,
+          type: 'DELETE',
+          error: function () {
+            this.state.greatgrandparent.setState({ show: 'false'});
+          }.bind(this)
+        });
+      } else {
+        $.ajax({
+          url: this.state.url,
+          type: 'DELETE',
+          success: function () {
+            this.setState({ name: 'Add to Cart', url: '/cart_items/', method: 'POST' });
+          }.bind(this)
+        });
+      }
+    } else if (this.state.method === 'POST') {
+      $.post( this.state.url,
+        {
+          product_id: this.props.product_id,
+          user_id: this.state.greatgrandparent.props.user.id,
+         },
+        function( cart_item_id ) {
+          this.setState({ name: 'Remove from Cart', url: '/cart_items/' + cart_item_id, method: 'DELETE' });
+        }.bind(this), "json"
+      );
+    } else{
         window.location.href = this.props.url;
     }
   }
