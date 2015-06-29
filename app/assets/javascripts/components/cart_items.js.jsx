@@ -19,7 +19,7 @@ var CartItems = React.createClass({
       <div className='row list-item'>
         <div className='col-sm-6'></div>
         <div className='col-sm-6'>
-          ${ (this.state.total).toFixed(2) }
+          ${ Math.abs((this.state.total).toFixed(2)) }
         </div>
       </div>
     );
@@ -33,26 +33,31 @@ var CartItem = React.createClass({
     return {
       cart_item: this.props.elem,
       product: this.props.product_elem,
-      total: this.props.cart_total
+      total: this.props.cart_total,
+      show: true
     };
   },
   render: function() {
-    return (
-      <div className='row list-item'>
-        <div className='col-sm-1'>
-          <input id='quantity' className='large-input' size='3' type='text' placeholder={ this.state.cart_item.quantity } onKeyUp={ this.changed } />
+    if (this.state.show === true) {
+      return (
+        <div className='row list-item'>
+          <div className='col-sm-1'>
+            <input id='quantity' className='large-input' size='3' type='text' placeholder={ this.state.cart_item.quantity } onKeyUp={ this.changed } />
+          </div>
+          <div className='col-sm-5'>
+            { this.state.product.name }
+          </div>
+          <div className='col-sm-6'>
+            ${ (this.state.product.price * this.state.cart_item.quantity).toFixed(2) }
+          </div>
         </div>
-        <div className='col-sm-5'>
-          { this.state.product.name }
-        </div>
-        <div className='col-sm-6'>
-          ${ (this.state.product.price * this.state.cart_item.quantity).toFixed(2) }
-        </div>
-      </div>
-    );
+      );
+    } else {
+      return (<div></div>);
+    };
   },
   changed: function (key) {
-    var new_quantity = key.target.value.trim();
+    var new_quantity = parseInt(key.target.value.trim());
     if (key.keyCode === 13) {
       var old_state = this;
       var url = '/cart_items/' + this.state.cart_item.id;
@@ -61,8 +66,8 @@ var CartItem = React.createClass({
            url: url,
            type: 'DELETE',
            success: function(response) {
-             //...
-           }
+             this.setState({ show: false });
+           }.bind(this)
         });
       } else if (new_quantity < 0) {
 
@@ -76,12 +81,6 @@ var CartItem = React.createClass({
              var old_quantity = old_state.props.elem.quantity;
              var old_total = old_state.state.total.state.total;
              var new_total = old_total + ((new_quantity - old_quantity) * old_state.state.product.price);
-             console.log('old_quantity: ' + old_quantity);
-             console.log('new_quantity: ' + new_quantity);
-             console.log('old_total: ' + old_total);
-             console.log('new_total: ' + new_total);
-
-
              old_state.setState({
               cart_item: updated_cart_item
              });

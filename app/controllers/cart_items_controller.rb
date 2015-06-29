@@ -44,7 +44,7 @@ class CartItemsController < ApplicationController
     authenticate_user!
     @cart_item = CartItem.find(params[:id])
     @cart_item.destroy
-    render json: "Cart Item was successfully destroyed."
+    render json: { response: "Cart Item was successfully destroyed." }
   end
 
   private
