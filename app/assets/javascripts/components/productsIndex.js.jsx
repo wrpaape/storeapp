@@ -181,7 +181,7 @@ var ListItem = React.createClass({
             </div>
             <div className='col-sm-9'>
               <ul className='details'>
-                <li>price: ${ this.props.elem.price }</li>
+                <li>price: ${ this.props.elem.price.toFixed(2) }</li>
                 <li>category: { this.props.elem.category }</li>
                 <li>owned by { this.props.elem.users_count } users</li>
                 <li>purchased { this.props.elem.purchases_count } times</li>
