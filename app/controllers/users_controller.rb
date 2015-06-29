@@ -41,6 +41,12 @@ class UsersController < ApplicationController
     authenticate_user!
     @user = User.find(params[:id])
     @cart_items = @user.cart_items
+    @products = []
+    @total = 0
+    @cart_items.each do |cart_item|
+      @products << cart_item.product
+      @total += cart_item.product.price * cart_item.quantity
+    end
   end
 
   def destroy_cart

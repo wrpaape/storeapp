@@ -19,7 +19,8 @@ class CartItemsController < ApplicationController
   end
 
   def create
-    @cart_item = CartItem.create(product_params_weak)
+    authenticate_user!
+    @cart_item = CartItem.create(cart_item_params_weak)
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Cart Item was successfully created.' }
       format.json { render json: @cart_item.id }
@@ -33,18 +34,26 @@ class CartItemsController < ApplicationController
   end
 
   def update
+    authenticate_user!
+    @cart_item = CartItem.find(params[:id])
+    @cart_item.update(quantity: cart_item_params_weak[:quantity])
+    render json: @cart_item
   end
 
   def destroy
+    authenticate_user!
+    @cart_item = CartItem.find(params[:id])
+    @cart_item.destroy
+    render json: "Cart Item was successfully destroyed."
   end
 
   private
 
-  def product_params_strong
+  def cart_item_params_strong
     params.require(:product).permit(:product_id, :user_id, :quantity)
   end
 
-  def product_params_weak
+  def cart_item_params_weak
     params.permit(:product_id, :user_id, :quantity)
   end
 
